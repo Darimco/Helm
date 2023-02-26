@@ -16,10 +16,10 @@
  - Cloud Build API
  - Google Cloud Storage JSON API
 #### 5.Create a new service account with the following IAM roles:
-Service Account User ( basic owner )
-Generate a new key for the service account and download it as a JSON file.
+ - Service Account User ( basic owner )
+ - Generate a new key for the service account and download it as a JSON file.
 #### 6.Add the following repository secrets to your GitHub repository:
-PROJECT_ID: The ID of your GCP project
-GOOGLE_DOMAIN_NAME: Your domain name.
-SERVICE_ACCOUNT: The JSON key file for the service account created in step 5.
-SONAR_TOKEN: The authentication token for your SonarQube instance
+ - PROJECT_ID: The ID of your GCP project
+ - GOOGLE_DOMAIN_NAME: Your domain name.
+ - SERVICE_ACCOUNT: The JSON key file for the service account created in step 5.
+ - SONAR_TOKEN: The authentication token for your SonarQube instance
