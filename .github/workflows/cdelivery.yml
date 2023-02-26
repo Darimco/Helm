@@ -8,10 +8,10 @@ env:
   artifact_repository: team4
 
 
-  enable_sonar:    "true"
-  sonar_organization: "dar"
-  sonar_projectKey: "dar_sonarqube-for-ots"
-  sonar_login: ${{ secrets.SONAR_TOKEN }}
+  # enable_sonar:    "true"
+  # sonar_organization: "dar"
+  # sonar_projectKey: "dar_sonarqube-for-ots"
+  # sonar_login: ${{ secrets.SONAR_TOKEN }}
 
 
 
@@ -56,16 +56,16 @@ jobs:
         run: |
           git clone ${{ env.repo }}
           
-      - name: Setup sonarqube
-        if: ${{env.enable_sonar == 'true'}}
-        uses: warchant/setup-sonar-scanner@v3
-      - name: Run sonarqube
-        if: ${{env.enable_sonar == 'true'}}
-        run: sonar-scanner
-            -Dsonar.organization=${{ env.sonar_organization }}                              
-            -Dsonar.projectKey=${{ env.sonar_projectKey }}                         
-            -Dsonar.login=${{ env.sonar_login }}                                   
-            -Dsonar.host.url=https://sonarcloud.io
+      # - name: Setup sonarqube
+      #   if: ${{env.enable_sonar == 'true'}}
+      #   uses: warchant/setup-sonar-scanner@v3
+      # - name: Run sonarqube
+      #   if: ${{env.enable_sonar == 'true'}}
+      #   run: sonar-scanner
+      #       -Dsonar.organization=${{ env.sonar_organization }}                              
+      #       -Dsonar.projectKey=${{ env.sonar_projectKey }}                         
+      #       -Dsonar.login=${{ env.sonar_login }}                                   
+      #       -Dsonar.host.url=https://sonarcloud.io
 
       - name: Build the image
         working-directory: ${{ env.app_name }}
