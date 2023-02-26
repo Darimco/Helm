@@ -1,0 +1,67 @@
+env:
+  repo:               "https://github.com/Luzifer/ots.git"
+  region:             "us-central1"
+  app_name:           "ots"
+  app_version:        ${GITHUB_SHA}
+  app_port:           "3000"
+  project_id:         "${{ secrets.PROJECT_ID }}"
+  repository:         "us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/team4/ots"
+  cluster_name:       "project-cluster"
+  google_domain_name: "${{ secrets.GOOGLE_DOMAIN_NAME }}"
+  environment:        "dev"
+
+name: Dockerfile
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      #- name: Run a one-line script
+      #  run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      # - name: Run a multi-line script
+      #   run: |
+      #   echo Add other actions to build,
+      #    echo test, and deploy your project.
+      # Runs a single command using the runners shell .
+      - name: Clone a Repository
+        run: git clone ${{ env.repo }}
+
+      - name: Build the image
+        working-directory: ots
+        run: 
+          docker build -t ${{ env.region }}-docker.pkg.dev/${{ env.project_id }}/${{ env.artifact_repository }}/${{ env.app_name }}:${{ env.tag_new_version }} .
+
+      - name: Authenticate to Registry 
+        id: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.SERVICE_ACCOUNT }}'   
+
+      - name: Authenticate to Repository
+        run: |
+          gcloud auth configure-docker   ${{ env.region }}-docker.pkg.dev    
+
+      - name: push
+        run: docker push ${{ env.region }}-docker.pkg.dev/${{ env.project_id }}/${{ env.artifact_repository }}/${{ env.app_name }}:${{ env.tag_new_version }} 
