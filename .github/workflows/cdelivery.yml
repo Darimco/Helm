@@ -1,5 +1,5 @@
 env:
-  repo: https://github.com/Darimco/Helm.git  
+  repo: https://github.com/Luzifer/ots.git 
   app_version: 3.0.0
   region: us-central1
   project_id: ${{ secrets.PROJECT_ID }}
