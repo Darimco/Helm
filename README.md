@@ -1,6 +1,6 @@
 ## Instructions
 #### 1. Clone a repository
-#### 2. Follow insturctions of README.md files in each folder
+#### 2. Follow instructions of README.md files in each folder
 
 
 #### 3. Pay attention to the following requirements for the project:
