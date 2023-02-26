@@ -1,6 +1,6 @@
 env:
   repo: https://github.com/Luzifer/ots.git  #https://github.com/Aselya2507/project-testing.git
-  app_version: 5.0.0
+  app_version: 3.0.0
   region: us-central1
   project_id: ${{ secrets.PROJECT_ID }}
   app_name: ots
@@ -9,14 +9,12 @@ env:
 
 
   enable_sonar:    "true"
-  sonar_organization: "asselya-agaidarova"
-  sonar_projectKey: "asselya-agaidarova_sonarqube-for-team4"
+  sonar_organization: "dar"
+  sonar_projectKey: "dar_sonarqube-for-ots"
   sonar_login: ${{ secrets.SONAR_TOKEN }}
 
 
 
-  VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
-  VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
 # This is a basic workflow to help you get started with Actions
 
 name: CDelivery
@@ -86,8 +84,3 @@ jobs:
 
       - name: push
         run: docker push ${{ env.region }}-docker.pkg.dev/${{ env.project_id }}/${{ env.artifact_repository }}/${{ env.app_name }}:${{ env.tag_new_version }} 
-
-     - name: Init
-       working-directory: ${{ env.app_name }}
-        run: |
-          terraform init      
